@@ -55,12 +55,16 @@
                 <b>  Oficinas Médicas  </b>
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="caguas.html">Caguas</a>
+                <a class="dropdown-item" href="cayey.html">Cayey</a>
+                <a class="dropdown-item" href="cidra.html">Cidra</a>
                 <a class="dropdown-item" href="humacao.html">Humacao</a>
-                <a class="dropdown-item" href="yabucoa.html">Yabucoa</a>
-                <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="juncos.html">Juncos</a>
                 <a class="dropdown-item" href="las_piedras.html">Las Piedras</a>
                 <a class="dropdown-item" href="naguabo.html">Naguabo</a>
+                <a class="dropdown-item" href="san_lorenzo.html">San Lorenzo</a>
+                <a class="dropdown-item" href="yabucoa.html">Yabucoa</a>
+
               </div>
       </div>
       <div class="d-flex flex-row justify-content-center mt-2">
@@ -114,31 +118,33 @@
 
 <h3> Favor de Ingresar sus datos para poderle Ayudar</h3>
 
-                  <form class="contact-from" action="prueba3.php" method="POST" >
+<form id="form">  
                    <h4>
+              
                     <div class="form-group mt-5">
-                      <label for="formGroupExampleInput"> <h4> Ingrese su Email </h4> </label>
-                      <input type="email" name="email" style="background-color: #f9f9fa; " class="form-control" id="formGroupExampleInput" placeholder="Email" required>
-                    </div>
-
-                    <div class="form-group">
+                      <input type="hidden" name="apikey" value="1234567890">
                       <label for="formGroupExampleInput2">  Asunto </label>
-                      <input type="text" name="title" style="background-color: #f9f9fa; " class="form-control" id="formGroupExampleInput2" placeholder="Ingresa el asunto" required >
+                      <input type="text" name="subject" style="background-color: #f9f9fa; " class="form-control" id="formGroupExampleInput2" placeholder="Ingresa el asunto" required >
                     </div>
-
-                    <div class="form-group">
+                   
+                    <div class="form-group mt-2">
                       <label for="formGroupExampleInput2">  Ingrese su Nombre completo</label>
-                      <input type="text"  name="fullname" style="background-color: #f9f9fa; " class="form-control" id="formGroupExampleInput2" placeholder="Nombre Completo"  required >
+                      <input type="text"  name="name" style="background-color: #f9f9fa; " class="form-control" id="formGroupExampleInput2" placeholder="Nombre Completo"  required >
+                    </div>
+                    <div class="form-group mt-2">
+                      <label for="formGroupExampleInput"> <h4> Ingrese su Email </h4> </label>
+                      <input type="email" name="mailfrom" style="background-color: #f9f9fa; " class="form-control" id="formGroupExampleInput" placeholder="Email" required>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group mt-2">
                       <label for="formGroupExampleInput2" >  En que le podemos ayudar </label>
-                      <input type="text" name="help" style="background-color: #f9f9fa; height: 200px;" class="form-control" id="formGroupExampleInput2" placeholder= "Ingrese su inquietud" required >
+                      <input type="text" name="message" style="background-color: #f9f9fa; height: 200px;" class="form-control" id="formGroupExampleInput2" placeholder= "Ingrese su inquietud" required >
                     </div>
+                    
 
                     <div class="form-group row">
                       <div class="col-sm-10">
-                        <button type="submit" class="btn btn-primary">Enviar</button>
+                        <button type="button" onclick="send()" class="btn btn-primary">Enviar</button>
                       </div>
                     </div>
                   </form>
@@ -151,22 +157,47 @@
         </div>
         </div>
 
-
-        
-       
-        
-
-
-   
-
-
 </div>
- 
-  
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="/bootstrap-document/js/jquery-3.4.1.slim.min.js" ></script>
+   
     <script src="/bootstrap-document/js/popper.min.js" ></script>
+    <script src="/bootstrap-document/js/jquery-3.4.1.slim.min.js" ></script>
     <script src="/bootstrap-document/js/bootstrap.min.js" ></script>
+    
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+<script>
+    function send(){
+        $.ajax({ 
+            accepts: {
+                mycustomtype: 'application/son'
+            },
+            url: "http://richard.dblopers.com/", 
+            method: "POST", 
+            data: $('#form').serialize(), 
+            dataType: 'jsonp',
+            crossDomain: true,
+            contentType: "application/json",
+        })
+        .done(function( data, textStatus, jqXHR ) {
+            Swal.fire(
+                'Enviado!',
+                'Tu mensaje fue enviado a nuestro equipo y se contactar&aacute;n contigo a la brevedad posible',
+                'success'
+            )
+        })
+        .fail(function( jqXHR, textStatus, errorThrown ) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Algo ha ocurrido, vuelve a intentarlo mas tarde'
+            })
+        });
+    }
+</script> 
+
 </body>
 </html>

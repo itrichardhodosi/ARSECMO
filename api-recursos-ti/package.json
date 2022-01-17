@@ -1,0 +1,44 @@
+{
+  "name": "sfa-nombre-proyecto",
+  "version": "1.0.0",
+  "description": "API (P000) Nombre Proyecto",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon index.mjs --exec babel-node"
+  },
+  "keywords": [
+    "sfa"
+  ],
+  "author": "Alexander Joffre",
+  "license": "ISC",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-3": "^6.24.1",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "csv-parser": "^3.0.0",
+    "dotenv": "^10.0.0",
+    "exceljs": "^4.3.0",
+    "express": "^4.17.1",
+    "express-device": "^0.4.2",
+    "express-fileupload": "^1.2.1",
+    "express-promise-router": "^4.1.0",
+    "geoip-lite": "^1.4.2",
+    "helmet": "^4.6.0",
+    "html-pdf": "^3.0.1",
+    "json2csv": "^5.0.6",
+    "jsonwebtoken": "^8.5.1",
+    "moment-timezone": "^0.5.33",
+    "mongoose": "^5.12.14",
+    "morgan": "^1.10.0",
+    "nodemailer": "^6.6.3",
+    "save": "^2.4.0",
+    "strip-bom-stream": "^4.0.0",
+    "swagger-ui-express": "^4.1.6"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}

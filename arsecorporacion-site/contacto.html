@@ -120,22 +120,22 @@
                             <h4>
 
                                 <div class="form-group mt-5">
-                                    <label for="formGroupExampleInput2">  Asunto </label>
-                                    <input type="text" id="subject" style="background-color: #f9f9fa; " class="form-control" id="formGroupExampleInput2" placeholder="Ingresa el asunto" required>
+                                    <label for="subject"> Asunto </label>
+                                    <input type="text" id="subject" name="subject" style="background-color: #f9f9fa;" class="form-control" placeholder="Ingresa el asunto" required>
                                 </div>
 
                                 <div class="form-group mt-2">
-                                    <label for="formGroupExampleInput2">  Ingrese su Nombre completo</label>
-                                    <input type="text" id="name" style="background-color: #f9f9fa; " class="form-control" id="formGroupExampleInput2" placeholder="Nombre Completo" required>
+                                    <label for="name"> Ingrese su Nombre completo </label>
+                                    <input type="text" id="name" name="name" style="background-color: #f9f9fa;" class="form-control" placeholder="Nombre Completo" required>
                                 </div>
                                 <div class="form-group mt-2">
-                                    <label for="formGroupExampleInput"> <h4> Ingrese su Email </h4> </label>
-                                    <input type="email" id="to" style="background-color: #f9f9fa; " class="form-control" id="formGroupExampleInput" placeholder="Email" required>
+                                    <label for="to"> <h4> Ingrese su Email </h4> </label>
+                                    <input type="email" id="to" name="email" style="background-color: #f9f9fa;" class="form-control" placeholder="ejemplo@correo.com" required>
                                 </div>
 
                                 <div class="form-group mt-2">
-                                    <label for="formGroupExampleInput2">  En que le podemos ayudar </label>
-                                    <input type="text" id="message" style="background-color: #f9f9fa; height: 200px;" class="form-control" id="formGroupExampleInput2" placeholder="Ingrese su inquietud" required>
+                                    <label for="message"> En que le podemos ayudar </label>
+                                    <textarea id="message" name="message" style="background-color: #f9f9fa; height: 150px;" class="form-control" placeholder="Ingrese su inquietud" required></textarea>
                                 </div>
 
 
@@ -183,16 +183,39 @@
 
 <script>
     function send(){
-        const subject = document.getElementById("subject").value || "Nuevo mensaje de contacto";
-        const name = document.getElementById("name").value;
-        const message = document.getElementById("message").value;
-        const contactEmail = document.getElementById("to").value;
+        const subjectEl = document.getElementById("subject");
+        const nameEl = document.getElementById("name");
+        const emailEl = document.getElementById("to");
+        const messageEl = document.getElementById("message");
 
-        if (!name || !contactEmail || !message) {
+        const subject = subjectEl ? subjectEl.value.trim() : "";
+        const name = nameEl ? nameEl.value.trim() : "";
+        const contactEmail = emailEl ? emailEl.value.trim() : "";
+        const message = messageEl ? messageEl.value.trim() : "";
+
+        if (!name) {
             Swal.fire({
                 icon: 'warning',
-                title: 'Campos requeridos',
-                text: 'Por favor complete su nombre, email y mensaje.'
+                title: 'Nombre requerido',
+                text: 'Por favor ingrese su nombre completo.'
+            });
+            return;
+        }
+
+        if (!contactEmail || !contactEmail.includes('@') || !contactEmail.includes('.')) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Email inválido',
+                text: 'Por favor ingrese un correo electrónico válido (ejemplo: usuario@correo.com).'
+            });
+            return;
+        }
+
+        if (!message) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Mensaje requerido',
+                text: 'Por favor escriba su inquietud o mensaje.'
             });
             return;
         }
@@ -201,7 +224,7 @@
             access_key: "3c702ad5-633a-4755-861e-891acd9333f3",
             name: name,
             email: contactEmail,
-            subject: subject,
+            subject: subject || "Nuevo mensaje de contacto desde web",
             message: message,
             from_name: "Web Arse Corporacion"
         };
@@ -233,16 +256,20 @@
             } else {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Oops...',
-                    text: response.message || 'Algo ha ocurrido, vuelve a intentarlo más tarde'
+                    title: 'Error de envío',
+                    text: response.message || 'No se pudo enviar el mensaje, intente más tarde.'
                 });
             }
         })
         .fail(function( jqXHR, textStatus, errorThrown ) {
+            let errorMsg = 'Algo ha ocurrido, vuelve a intentarlo más tarde';
+            if (jqXHR && jqXHR.responseJSON && jqXHR.responseJSON.message) {
+                errorMsg = jqXHR.responseJSON.message;
+            }
             Swal.fire({
                 icon: 'error',
-                title: 'Oops...',
-                text: 'Algo ha ocurrido, vuelve a intentarlo más tarde'
+                title: 'Error de envío',
+                text: errorMsg
             });
         });
     }

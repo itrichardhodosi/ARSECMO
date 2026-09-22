@@ -1,0 +1,10 @@
+# Backups y archivos pesados
+web_backup.tar.gz
+*.tar.gz
+*.zip
+
+# Dependencias y temporales
+node_modules/
+.DS_Store
+Thumbs.db
+.firebase/
